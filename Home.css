@@ -321,14 +321,27 @@
     min-height: 796px;
   }
 
+  #choiceDiv {
+    height: 200px !important;
+  }
+
+  #myInput {
+    top: 50px !important;
+  }
+
+  #skipButton {
+    left: 25px;
+  }
+
+  #messageText {
+    font-size: 12px;
+  }
+
   .u-section-1 .u-image-1 {
     width: 340px;
     height: 191px;
   }
 
-  #skipButton {
-    left: 75px;
-  }
 
   .u-section-1 .u-gallery-nav-2 {
     top: 177px !important;
