@@ -14,82 +14,80 @@
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
     
     
+    
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
 		"@type": "Organization",
-		"name": "Site1"
+		"name": "a"
 }</script>
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="Dreamcatcher Heardle">
     <meta property="og:description" content="Play Dreamcatcher Heardle Game">
     <meta property="og:type" content="website">
-  <meta data-intl-tel-input-cdn-path="intlTelInput/">
-
-  <style>
-    iframe {
-        display: block;
-      }
-  </style>
-
-  </head>
-  <body data-home-page="Home.html" data-home-page-title="Home" class="u-body u-gradient u-stick-footer u-xl-mode" data-lang="en" style="background-image: linear-gradient(to right, #101820, #8a2a2b);"><header class="u-clearfix u-header u-header" id="sec-f40c"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-align-left u-custom-font u-font-open-sans u-text u-text-default u-text-grey-50 u-text-1">Dreamcatcher Heardle</p>
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body data-home-page="Home.html" data-home-page-title="Home" class="u-body u-gradient u-stick-footer u-xl-mode" data-lang="en" style="background-image: linear-gradient(#101820, #8a2a2b);"><header class="u-clearfix u-header u-header" id="sec-f40c">
+    <div class="u-clearfix u-sheet">
+        <h3 id="scoreCard" class="u-hover-feature u-text u-text-custom-color-3 u-text-default u-text-1">0</h3>
+        <h3 class="u-text u-text-custom-color-3 u-text-default u-text-2">SCORE</h3>
+        <p id="headerTitle" class="u-align-left u-custom-font u-font-open-sans u-text u-text-default u-text-grey-50 u-text-3">Dreamcatcher Heardle</p>
       </div></header>
     <section class="u-clearfix u-section-1" id="sec-9bde">
-      <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-sheet-1">
+      <div class="u-clearfix u-sheet u-sheet-1">
         <img id="imageHolder" class="u-image u-image-default u-image-1" src="images/front.gif" alt="" data-image-width="480" data-image-height="270">
         <div id="player-container" class="center u-image u-image-default u-image-1" style="display: none;">
-          <div id="player"></div><br>
+          <div id="player" class="u-section-1 u-image-1"></div><br>
         </div>
+        <a id="skipButton" class="u-border-none u-btn u-btn-round u-button-style u-custom-color-3 u-dialog-link u-hover-custom-color-1 u-radius-50 u-btn-1">SKIP</a>
         <div class="u-expanded-width-sm u-expanded-width-xs u-list u-list-1">
           <div class="u-repeater u-repeater-1">
             <div class="u-container-style u-custom-item u-list-item u-repeater-item">
               <div class="u-container-layout u-similar-container u-container-layout-1">
-                <a id="timeButton" class="timeButton u-align-center-xs u-border-none u-btn u-btn-round u-button-style u-custom-color-3 u-custom-item u-hover-palette-1-light-1 u-radius-50 u-btn-1">Add time</a>
+                <a id="timeButton" class="timeButton u-border-none u-bottom-left-radius-10 u-bottom-right-radius-10 u-btn u-btn-round u-button-style u-custom-color-3 u-custom-item u-hover-custom-color-1 u-btn-2">TIME+</a>
               </div>
             </div>
             <div class="u-container-style u-custom-item u-list-item u-repeater-item">
               <div class="u-container-layout u-similar-container u-container-layout-2">
-                <a onclick="playVideo()" class="playButton u-align-center-xs u-border-none u-btn u-btn-round u-button-style u-custom-color-3 u-custom-item u-hover-palette-1-light-1 u-radius-50 u-btn-2">Start</a>
+                <a onclick="playVideo()" id="playBtn" class="playButton u-border-none u-bottom-left-radius-10 u-bottom-right-radius-10 u-btn u-btn-round u-button-style u-custom-color-3 u-custom-item u-hover-custom-color-1 u-btn-3">Start</a>
               </div>
             </div>
             <div class="u-container-style u-custom-item u-list-item u-repeater-item">
               <div class="u-container-layout u-similar-container u-container-layout-3">
-                <a id="nextButton" class="nextButton u-align-center-xs u-border-none u-btn u-btn-round u-button-style u-custom-color-3 u-custom-item u-hover-palette-1-light-1 u-radius-50 u-btn-3">Next</a>
+                <a id="nextButton" class="nextButton u-border-none u-bottom-left-radius-10 u-bottom-right-radius-10 u-btn u-btn-round u-button-style u-custom-color-3 u-custom-item u-hover-custom-color-1 u-btn-4">Next</a>
               </div>
             </div>
             <div class="u-container-style u-custom-item u-list-item u-repeater-item">
               <div class="u-container-layout u-similar-container u-container-layout-4">
-                <a id="resetButton" class="resetButton u-align-center-xs u-border-none u-btn u-btn-round u-button-style u-custom-color-3 u-custom-item u-hover-palette-1-light-1 u-radius-50 u-btn-4">Reset</a>
+                <a id="resetButton" class="resetButton u-border-none u-bottom-left-radius-10 u-bottom-right-radius-10 u-btn u-btn-round u-button-style u-custom-color-3 u-custom-item u-hover-custom-color-1 u-btn-5">RESET</a>
               </div>
             </div>
           </div>
         </div>
+        <h4 id="messageText" class="u-text u-text-custom-color-3 u-text-default u-text-1">Sample</h4>
         <div class="u-expanded-width u-layout-horizontal u-list u-list-2">
-          <div class="u-repeater u-repeater-2">
+          <div id="choiceSection" class="u-repeater u-repeater-2">
             <div class="u-container-style u-list-item u-repeater-item">
-              <div  class="u-container-layout u-similar-container u-container-layout-5">
-                <h3 class="u-align-center u-text u-text-custom-color-3 u-text-default u-text-1">Song</h3>
+              <div class="u-container-layout u-similar-container u-container-layout-5">
+                <h3 class="u-align-center u-text u-text-custom-color-3 u-text-default u-text-2">Song</h3>
                 <ul id="songColumn">
                 </ul>
               </div>
             </div>
             <div class="u-container-style u-list-item u-repeater-item">
-              <div id="albumRow" class="u-container-layout u-similar-container u-container-layout-6">
-                <h3 class="u-align-center u-text u-text-custom-color-3 u-text-default u-text-2">Album</h3>
+              <div class="u-container-layout u-similar-container u-container-layout-6">
+                <h3 class="u-align-center u-text u-text-custom-color-3 u-text-default u-text-3">Album (BP)</h3>
                 <ul id="albumColumn">
                 </ul>
               </div>
             </div>
             <div class="u-container-style u-list-item u-repeater-item">
-              <div id="releaseRow" class="u-container-layout u-similar-container u-container-layout-7">
-                <h3 class="u-align-center u-text u-text-custom-color-3 u-text-default u-text-3">Release Date</h3>
+              <div class="u-container-layout u-similar-container u-container-layout-7">
+                <h3 class="u-align-center u-text u-text-custom-color-3 u-text-default u-text-4">Release Date (BP)</h3>
                 <ul id="releaseColumn">
                 </ul>
               </div>
             </div>
           </div>
-          <a class="u-absolute-vcenter-lg u-absolute-vcenter-xl u-gallery-nav u-gallery-nav-prev u-grey-70 u-hidden-lg u-hidden-xl u-icon-circle u-opacity u-opacity-70 u-spacing-10 u-text-white u-gallery-nav-1" href="#" role="button">
+          <a id="leftarrow" class="u-absolute-vcenter-lg u-absolute-vcenter-xl u-gallery-nav u-gallery-nav-prev u-grey-70 u-hidden-xl u-icon-circle u-opacity u-opacity-70 u-spacing-10 u-text-white u-gallery-nav-1" href="#" role="button">
             <span aria-hidden="true">
               <svg viewBox="0 0 451.847 451.847"><path d="M97.141,225.92c0-8.095,3.091-16.192,9.259-22.366L300.689,9.27c12.359-12.359,32.397-12.359,44.751,0
 c12.354,12.354,12.354,32.388,0,44.748L173.525,225.92l171.903,171.909c12.354,12.354,12.354,32.391,0,44.744
@@ -101,7 +99,7 @@ c12.354,12.354,12.354,32.388,0,44.748L173.525,225.92l171.903,171.909c12.354,12.3
 c-12.354,12.365-32.386,12.365-44.745,0l-194.29-194.281C100.226,242.115,97.141,234.018,97.141,225.92z"></path></svg>
             </span>
           </a>
-          <a class="u-absolute-vcenter u-gallery-nav u-gallery-nav-next u-grey-70 u-hidden-lg u-hidden-xl u-icon-circle u-opacity u-opacity-70 u-spacing-10 u-text-white u-gallery-nav-2" href="#" role="button">
+          <a id="rightarrow" class="u-absolute-vcenter u-gallery-nav u-gallery-nav-next u-grey-70 u-hidden-xl u-icon-circle u-opacity u-opacity-70 u-spacing-10 u-text-white u-gallery-nav-2" href="#" role="button">
             <span aria-hidden="true">
               <svg viewBox="0 0 451.846 451.847"><path d="M345.441,248.292L151.154,442.573c-12.359,12.365-32.397,12.365-44.75,0c-12.354-12.354-12.354-32.391,0-44.744
 L278.318,225.92L106.409,54.017c-12.354-12.359-12.354-32.394,0-44.748c12.354-12.359,32.391-12.359,44.75,0l194.287,194.284
@@ -114,16 +112,99 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
             </span>
           </a>
         </div>
-        <input type="text" id="myInput" class="u-align-center u-border-none u-btn u-button-style u-custom-color-3 u-hover-palette-1-dark-1 u-btn-5" onkeyup="filterList()" placeholder="Search for items...">
+        <input type="text" id="myInput" class="u-align-center u-border-none u-btn u-button-style u-custom-color-3 u-hover-palette-1-dark-1 u-btn-5" onkeyup="filterList()" placeholder="Search for song...">
       </div>
     </section>
     
     
-    <!--<footer class="u-align-center u-clearfix u-container-align-center-lg u-container-align-center-md u-container-align-center-sm u-container-align-center-xs u-footer u-grey-80 u-footer" id="sec-ae10"><div class="u-clearfix u-sheet u-sheet-1">
-        <p class="u-align-center u-small-text u-text u-text-variant u-text-1">Dreamcatcher Heardle Game</p>
-      </div></footer>-->
-  
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="main.js"></script>
+    
+  <section class="u-align-center u-black u-clearfix u-container-style u-dialog-block u-opacity u-opacity-70 u-valign-middle u-dialog-section-4" id="gamealert">
+      <div class="u-align-center u-container-style u-custom-color-1 u-dialog u-dialog-1">
+        <div class="u-container-layout u-valign-top u-container-layout-1">
+          <img alt="" class="u-expanded-width u-image u-image-default u-image-1" data-image-width="1500" data-image-height="1001" src="./images/front.gif" data-lang-en="">
+          <h3 class="u-text u-text-default u-text-1"id="modalHeader" >Header Text</h3>
+          <pre class="u-align-center u-text u-text-2" id="modalText" >Sample Text</pre>
+          <a class="u-border-none u-btn u-btn-round u-button-style u-custom-color-3 u-hover-custom-color-2 u-radius-50 u-btn-1" id="modalButton" >Sample Button</a>
+        </div><button id="alertCloseButton" class="u-border-2 u-border-grey-25 u-dialog-close-button u-icon u-icon-circle u-text-custom-color-3 u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 16 16" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-6e8b"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 16 16" x="0px" y="0px" id="svg-6e8b"><rect x="7" y="0" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -3.3138 8.0002)" width="2" height="16"></rect><rect x="0" y="7" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -3.3138 8.0002)" width="16" height="2"></rect></svg></button>
+      </div>
+    </section><style>.u-dialog-section-4 .u-dialog-1 {
+  width: 387px;
+  min-height: 526px;
+  margin: 60px auto;
+}
 
+.u-dialog-section-4 .u-container-layout-1 {
+  padding: 70px 30px 30px;
+}
+
+.u-dialog-section-4 .u-image-1 {
+  height: 193px;
+  margin: 0 -60px 0 auto;
+}
+
+.u-dialog-section-4 .u-text-1 {
+  font-weight: 700;
+  margin: 20px auto 0;
+}
+
+.u-dialog-section-4 .u-text-2 {
+  margin: 20px 0 0;
+}
+
+.u-dialog-section-4 .u-btn-1 {
+  border-style: none;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 1px;
+  text-transform: none;
+  background-image: none;
+  margin: 20px auto 0;
+}
+
+.u-dialog-section-4 .u-icon-1 {
+  width: 31px;
+  height: 31px;
+  background-image: none;
+  left: auto;
+  top: 20px;
+  position: absolute;
+  right: 20px;
+  padding: 7px;
+}
+
+@media (max-width: 1199px) {
+  .u-dialog-section-4 .u-dialog-1 {
+    height: auto;
+  }
+
+  .u-dialog-section-4 .u-image-1 {
+    height: 193px;
+    margin-right: initial;
+    margin-left: initial;
+  }
+}
+
+@media (max-width: 767px) {
+  .u-dialog-section-4 .u-dialog-1 {
+    min-height: 514px;
+  }
+
+  .u-dialog-section-4 .u-container-layout-1 {
+    padding-top: 65px;
+  }
+}
+
+@media (max-width: 575px) {
+  .u-dialog-section-4 .u-dialog-1 {
+    width: 340px;
+    min-height: 503px;
+  }
+
+  .u-dialog-section-4 .u-container-layout-1 {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}</style>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="main.js"></script>
 </body></html>

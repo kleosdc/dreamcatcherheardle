@@ -1,5 +1,5 @@
 // Example list of strings
-/*VIDEO_ID: ["Album", "Song", "Date"] 64 in KV*/
+/*VIDEO_ID: ["Album", "Song", "Date"] 65 in KV*/
 playlist = {
   "iLXyoC2HRgY": ["Love Shake", "Love Shake", "September 22, 2014"],
   "XwCDkRiJucw": ["Love Shake", "Shut Up", "September 22, 2014"],
@@ -71,94 +71,202 @@ playlist = {
 // Create an empty list for completed strings
 let completedList = {};
 
+let STARTED = false;
+let HALTSTATE = false;
+let songHALT = false;
+let albumHALT = false;
+let releaseHALT = false;
+
 let VIDEO_ID = '';
-let STARTED = false
 let START_TIME = 0;
 let START_TIME_SECONDS = 0;
 let END_TIME = 0;
-let skipped = 0;
+
 let CURRENT_SONG = '';
 let CURRENT_ALBUM = '';
 let CURRENT_RELEASE = '';
 
-function getSong() {
-  if (playlist.length == 0) {
-    console.log("No more songs")
-    nextButton.style.visibility = "hidden";
-    return;
-  }
-  let keys = Object.keys(playlist);
-  // Generate a random index within the range of the original list
-  let randomIndex = Math.floor(Math.random() * keys.length);
-  let randomKey = keys[randomIndex];
+let SCORE = 0;
+let giveScore = 1;
+let skipped = 0;
+let timed = 0;
+let moretime = 0;
+let MAX_TRIES = 10;
+let SONGSCORRECT = 0;
+let songClicks = 0;
+let ALBUMCORRECT = 0;
+let albumClicks = 0;
+let RELEASECORRECT = 0;
+let releaseClicks = 0;
 
-  CURRENT_SONG = playlist[randomKey][1];
-  CURRENT_ALBUM = playlist[randomKey][0];
-  CURRENT_RELEASE = playlist[randomKey][2];
-  console.log(`Song: ${CURRENT_SONG} - Album: ${CURRENT_ALBUM} - Release: ${CURRENT_RELEASE}`);
 
-  completedList[randomKey] = playlist[randomKey];
+var player;
 
-  // Get the randomly selected string from the original list
-  VIDEO_ID = keys[randomIndex];
+let nextButton = document.getElementById("nextButton");
+let timeButton = document.getElementById("timeButton");
+let resetButton = document.getElementById("resetButton");
+let skipButton = document.getElementById("skipButton");
+let alertCloseButton = document.getElementById("alertCloseButton");
+let modalButton = document.getElementById("modalButton");
+let playBtn = document.getElementById("playBtn");
 
-  delete playlist[randomKey];
+let choiceSection = document.getElementById("choiceSection");
+let songColumn = document.getElementById("songColumn");
+let albumColumn = document.getElementById("albumColumn");
+let releaseColumn = document.getElementById("releaseColumn");
 
-  // Print the updated lists
-  console.log("Original List:", playlist);
-  console.log("Completed List:", completedList);
-  getTimeframe();
-}
+let imageHolder = document.getElementById("imageHolder");
+let playerHolder = document.getElementById("player-container");
+let scoreCard = document.getElementById("scoreCard");
+let messageText = document.getElementById("messageText");
+let modalPopup = document.getElementById("gamealert");
+let modalHeader = document.getElementById("modalHeader");
+let modalText = document.getElementById("modalText");
+let headTitle = document.getElementById("headerTitle");
 
-function getTimeframe() {
-  // Get a random number of seconds between 25 and 150 (2 minutes and 30 seconds)
-  let randomSeconds1 = Math.floor(Math.random() * (150 - 25 + 1) + 25);
-  let randomSeconds2 = randomSeconds1 + 1;
+let input = document.getElementById("myInput");
 
-  // Convert the random number of seconds to Date objects
-  let time1 = new Date(randomSeconds1 * 1000);
-  let time2 = new Date(randomSeconds2 * 1000);
+// CALLER
+starterPack();
 
-  // Format the times as x:xx
-  START_TIME = time1.toISOString().substr(14, 5);
-  START_TIME_SECONDS = START_TIME.split(':').reduce((acc, val) => acc * 60 + parseInt(val, 10), 0);
-  END_TIME = time2.toISOString().substr(14, 5);
 
-  // Print the formatted times
-  console.log(START_TIME, END_TIME, START_TIME_SECONDS);
-}
-
-function gameCheck() {
-  if (skipped > 5) {
-    console.log('Game Over');
-    alert('Game Over');
-    resetButton.click();
-    console.log("Auto Restart!");
+// Checks if there are songs listed in playlist - CHECKED
+function availableSongs() {
+  if (Object.keys(playlist).length <= 0) {
+    modalPopup.style.display = 'block';
+    modalGameAlert("You finished!", "Here are your results.", "Play again!");
     return false
   }
   return true
 }
 
-function resetGame() {
-  Object.assign(playlist, completedList);
+// Randomly select a song from playlist - CHECKED
+function getSong() {
+  if (availableSongs()) {
+    let keys = Object.keys(playlist);
+    // Generate a random index within the range of the original list
+    let randomIndex = Math.floor(Math.random() * keys.length);
+    let randomKey = keys[randomIndex];
 
-  for (const key in completedList) {
-    if (completedList.hasOwnProperty(key)) {
-      delete completedList[key];
+    CURRENT_SONG = playlist[randomKey][1];
+    CURRENT_ALBUM = playlist[randomKey][0];
+    CURRENT_RELEASE = playlist[randomKey][2];
+    //console.log(`Song: ${CURRENT_SONG} - Album: ${CURRENT_ALBUM} - Release: ${CURRENT_RELEASE}`);
+
+    completedList[randomKey] = playlist[randomKey];
+
+    // Get the randomly selected string from the original list
+    VIDEO_ID = keys[randomIndex];
+
+    delete playlist[randomKey];
+
+    // Print the updated lists
+    //console.log("Original List:", playlist);
+    //console.log("Completed List:", completedList);
+    getTimeframe();
+  }
+}
+
+// Format our timeframe in minutes:seconds - CHECKED
+function getTimeframe() {
+  // Get a random number of seconds between 25 and 150 (2 minutes and 30 seconds)
+  let rads1 = Math.floor(Math.random() * (150 - 25 + 1) + 25);
+  let rads2 = rads1 + 1;
+
+  // Convert the random number of seconds to Date objects
+  let startTimeConverter = new Date(rads1 * 1000);
+  let endTimeConverter = new Date(rads2 * 1000);
+
+  // Format the times as x:xx
+  START_TIME = startTimeConverter.toISOString().substr(14, 5);
+  START_TIME_SECONDS = START_TIME.split(':').reduce((acc, val) => acc * 60 + parseInt(val, 10), 0);
+  END_TIME = endTimeConverter.toISOString().substr(14, 5);
+
+  // Print the formatted times
+  //console.log(START_TIME, END_TIME, START_TIME_SECONDS);
+}
+
+
+// Resets playlist to default
+function resetGame() {
+  if (STARTED) {
+    Object.assign(playlist, completedList);
+
+    for (const key in completedList) {
+      if (completedList.hasOwnProperty(key)) {
+        delete completedList[key];
+      }
+    }
+    moretime = 0;
+    MAX_TRIES = 10;
+    SCORE = 0;
+    skipped = 0;
+    timed = 0;
+    SONGSCORRECT = 0;
+    songClicks = 0;
+    ALBUMCORRECT = 0;
+    albumClicks = 0;
+    RELEASECORRECT = 0;
+    releaseClicks = 0;
+    headTitle.textContent = `${65-Object.keys(playlist).length}/${Object.keys(playlist).length}`;
+    scoreCard.textContent = SCORE
+    pkboo([[nextButton,"visibility","visible"]]);
+    nextButton.click();
+  } 
+}
+
+function gameStart() {
+  STARTED = true;
+}
+
+function gameStop() {
+  STARTED = false;
+}
+
+function starterPack() {
+  loadData(songColumn, 1);    // 65
+  loadData(albumColumn, 0);   // 17
+  loadData(releaseColumn, 2); // 17
+
+  headTitle.textContent = "Dreamcatcher Heardle";
+  //messageText.style.visibility = 'hidden';
+  pkboo([[messageText,"visibility","hidden"]]);
+}
+
+function modalGameAlert(_title, _text, _buttonText) {
+  HALTSTATE = true;
+  modalHeader.textContent = _title;
+  modalText.textContent = `${_text}.\nYou got ${SONGSCORRECT} song/s correct (${songClicks} click/s).\nYou got ${ALBUMCORRECT} album/s correct (${albumClicks} click/s).\nYou got ${RELEASECORRECT} release/s correct (${releaseClicks} click/s).\nYou added time ${timed} time/s.\nYou skipped ${skipped} song/s.\nFinal score: ${SCORE}`;
+  modalButton.textContent = _buttonText;
+}
+
+function modalReset() {
+  pkboo([[modalPopup,"display","none"]]);
+  modalHeader.textContent = "";
+  modalText.textContent = "";
+  modalButton.textContent = "";
+}
+
+function liElementsReset(ulElem) {
+  // Get all of the li elements inside the ul element
+  const liElements = ulElem.getElementsByTagName("li");
+
+  // Loop through all of the li elements and set their display property to "list-item"
+  for (let i = 0; i < liElements.length; i++) {
+    if (liElements[i].style.display === "none") {
+      liElements[i].style.display = "list-item";
     }
   }
-  nextButton.style.visibility = "visible";
-  nextButton.click();
 }
 
+// Update video on screen with new ID, Start time, and End time
 function updatePlayer() {
-  if (gameCheck()) {
-    youTubePlayerChangeVideoId(videoId, minutesToSeconds(START_TIME), minutesToSeconds(END_TIME));
-    displayStats();
-    STARTED = true;
-  }
+  gameStart();
+  youTubePlayerChangeVideoId(videoId, minutesToSeconds(START_TIME), minutesToSeconds(END_TIME));
+  displayStats();
 }
 
+// Checks if game has started or not.
 function gameStatus() {
   if (Object.keys(completedList).length == 0 && !(STARTED)) {
     alert('Game has not started, press "Start" then "Play"');
@@ -167,113 +275,264 @@ function gameStatus() {
   return true
 }
 
+// Debugger
 function displayStats() {
-  console.log(`Songs remaining: ${Object.keys(playlist).length} : Complete: ${Object.keys(completedList).length} : Timeframe: ${START_TIME}-${END_TIME}`);
+  //console.log(`Songs remaining: ${Object.keys(playlist).length} : Complete: ${Object.keys(completedList).length} : Timeframe: ${START_TIME}-${END_TIME}`);
 }
 
-function loadData() {
+function alertMessage() {
+
+}
+
+// Load data from playlist to be visualized
+function loadData(_elem, _indx) {
   // Create an empty array to hold the <li> elements
   let liArr = [];
-
+  // Create an empty object to track the values already added
+  let addedValues = {};
   // Loop through each key in the object
   for (let key in playlist) {
-    // Create a new <li> element
-    const li = document.createElement("li");
-
     // Concatenate the two values using the array syntax
-    let value = playlist[key][1];
-
-    // Set the innerHTML of the <li> element to the concatenated values
-    li.innerHTML = value;
-
-    // Add the <li> element to the array
-    liArr.push(li);
+    let value = playlist[key][_indx];
+    // Check if the value has already been added
+    if (!addedValues[value]) {
+      // If the value hasn't been added, create a new <li> element
+      const li = document.createElement("li");
+      // Set the innerHTML of the <li> element to the concatenated values
+      li.innerHTML = value;
+      // Add the <li> element to the array
+      liArr.push(li);
+      // Set the value as added in the addedValues object
+      addedValues[value] = true;
+    }
   }
-
-  // Shuffle the array using Array.sort() and Math.random()
-  liArr.sort(() => Math.random() - 0.5);
-
+  if (_elem.id != "releaseColumn") {
+    // Shuffle the array using Array.sort() and Math.random()
+    liArr.sort(() => Math.random() - 0.5);
+  }
   // Add the shuffled <li> elements to the <ul> element
-  liArr.forEach(li => songColumn.appendChild(li));
+  liArr.forEach(li => _elem.appendChild(li));
 }
 
 
-var player;
+choiceSection.addEventListener("click", (e) => {
+  if (!(HALTSTATE) || (!(songHALT) || !(albumHALT) || !(releaseHALT))) {
+    //console.log(e.target.parentElement.id);
+    if (e.target.tagName == "LI" && gameStatus()) {
+      if (e.target.parentElement.id == "songColumn" && !(songHALT)) {
+        (messageText.style.visibility = "visible", clearTimeout(window.timeoutId), window.timeoutId = setTimeout(() => messageText.style.visibility = "hidden", 3000))
+        songClicks += 1;
+        //console.log(e.target.textContent, CURRENT_SONG);
+        if (MAX_TRIES >= 0) {
+          if (e.target.textContent == CURRENT_SONG) {
+            youTubePlayerChangeVideoId(videoId, START_TIME_SECONDS, (START_TIME_SECONDS+30));
+            liElementsReset(songColumn);
+            input.value = "";
+            HALTSTATE = true;
+            songHALT = true;
 
-let nextButton = document.getElementById("nextButton");
-let timeButton = document.getElementById("timeButton");
-let resetButton = document.getElementById("resetButton");
+            setTimeout(() => { playVideo(); }, 1000);
+            imageHolder.style.display = "none";
+            playerHolder.style.display = "block";
+            SCORE += Number(giveScore.toFixed(2));
+            nextButton.style.visibility = "visible";
+            messageText.textContent = "Correct!";
+            //console.log('Correct song.', SCORE, giveScore);
+            SONGSCORRECT += 1;
+            giveScore = 1;
+            moretime = 0;
+          } else {
+            giveScore = Number((giveScore-0.1).toFixed(2));
+            MAX_TRIES -= 1;
+            messageText.textContent = `Incorrect! Tries remaining: ${MAX_TRIES}`;
+            //console.log('Wrong song selected.', SCORE, giveScore);
+          }
+        }
+        if (MAX_TRIES < 0) {
+          modalPopup.style.display = 'block';
+          modalGameAlert("Game Over!", "You did not win, try again", "Try Again!");
+        }
+      }
 
-let songColumn = document.getElementById("songColumn");
-let albumColumn = document.getElementById("albumColumn");
-let releaseColumn = document.getElementById("releaseColumn");
+      if (e.target.parentElement.id == "albumColumn" && !(albumHALT)) {
+        (messageText.style.visibility = "visible", clearTimeout(window.timeoutId), window.timeoutId = setTimeout(() => messageText.style.visibility = "hidden", 3000))
+        albumClicks += 1;
+        if (e.target.textContent == CURRENT_ALBUM) {
+          ALBUMCORRECT += 1;
+          albumHALT = true;
+          messageText.textContent = "Correct album!";
+          //console.log(e.target.textContent, CURRENT_ALBUM, "correct!");
+          SCORE += Number((1).toFixed(2));
+        } else {
+          messageText.textContent = "Incorrect!";
+          //console.log(e.target.textContent, CURRENT_ALBUM, "wrong!")
+        }
+      }
 
-let imageHolder = document.getElementById("imageHolder");
-let playerHolder = document.getElementById("player-container");
-
-let input = document.getElementById("myInput");
-
-loadData();
-
-songColumn.addEventListener("click", (e) => {
-  if (e.target.tagName == "LI" && gameStatus()) {
-    console.log(e.target.textContent, CURRENT_SONG);
-    if (e.target.textContent == CURRENT_SONG) {
-      youTubePlayerChangeVideoId(videoId, START_TIME_SECONDS, (START_TIME_SECONDS+30));
+      if (e.target.parentElement.id == "releaseColumn" && !(releaseHALT)) {
+        (messageText.style.visibility = "visible", clearTimeout(window.timeoutId), window.timeoutId = setTimeout(() => messageText.style.visibility = "hidden", 3000))
+        releaseClicks += 1;
+        if (e.target.textContent == CURRENT_RELEASE) {
+          RELEASECORRECT += 1;
+          releaseHALT = true;
+          //console.log(e.target.textContent, CURRENT_RELEASE, "correct!");
+          messageText.textContent = "Correct release!";
+          SCORE += Number((1).toFixed(2));
+        } else {
+          messageText.textContent = "Incorrect!";
+          //console.log(e.target.textContent, CURRENT_RELEASE, "wrong!");
+        }
+      }
       
+    }
+    scoreCard.textContent = SCORE;
+  }
+});
+
+playBtn.addEventListener("click", (e) => {
+  gameStart();
+});
+
+function addSkip() {
+  skipped += 1;
+}
+
+function addTime() {
+  timed += 1;
+}
+
+
+function showIMG() {
+  //imageHolder.style.display = "block";
+  //playerHolder.style.display = "none";
+  pkboo([[imageHolder,"display","block"],[playerHolder,"display","none"]]);
+}
+
+function showPLAYER() {
+  //imageHolder.style.display = "none";
+  //playerHolder.style.display = "block";
+  pkboo([[imageHolder,"display","none"],[playerHolder,"display","block"]]);
+}
+
+
+function pkboo(_listElem) {
+  // Loop through the list
+  for (let i = 0; i < _listElem.length; i++) {
+    // Check if the current item is a nested list
+    if (Array.isArray(_listElem[i])) {
+      // Check if the element is a valid HTML element
+      let element = _listElem[i][0];
+      let property = _listElem[i][1];
+      let value = _listElem[i][2];
+      //console.log(`${element} - ${property} - ${value}`);
+      if (!(element instanceof HTMLElement)) {
+        console.error("Error: First parameter must be a valid HTML element");
+        return;
+      }
+
+      // Check if the second parameter is a valid style property
+      if (property !== "visibility" && property !== "display") {
+        console.error("Error: Second parameter must be 'visibility' or 'display'");
+        return;
+      }
+
+      // Check if the third parameter is a valid value
+      if (value !== "visible" && value !== "hidden" && value !== "none" && value !== "block") {
+        console.error("Error: Third parameter must be 'visible', 'hidden', 'none', or 'block'");
+        return;
+      }
+
+      // Set the style property of the element to the specified value
+      element.style[property] = value;
+    }
+  }
+}
+
+function posNumbers(_oNum, _decBy) {
+  if ((_oNum - _decBy) < 0) {
+    return 0;
+  }
+  return (_oNum - _decBy);
+}
+
+nextButton.addEventListener("click", (e) => {
+  HALTSTATE = false;
+  songHALT = false;
+  albumHALT = false;
+  releaseHALT = false;
+  headTitle.textContent = `${65-Object.keys(playlist).length}/${Object.keys(playlist).length}`;
+  if (availableSongs()) {
+    // Check if game has started
+    if (!(gameStatus())) {
+      return
+    }
+    if (document.getElementsByClassName('playButton')[0].textContent != "Start") {
+      giveScore = 1;
+      showIMG();
+      pkboo([[nextButton, "visibility", "hidden"]]);
+      e.preventDefault();
+      getSong();
+      videoId = YouTubeGetID("https://www.youtube.com/watch?v="+VIDEO_ID);
+      updatePlayer();
       setTimeout(() => { playVideo(); }, 1000);
-      imageHolder.style.display = "none";
-      playerHolder.style.display = "block";
-      console.log('Correct song.');
-    } else {
-      console.log('Wrong song selected.');
     }
   }
 });
 
-nextButton.addEventListener("click", (e) => {
-  if (Object.keys(playlist).length == 0) {
-    alert('No more songs');
-    return
-  }
-  // Check if game has started
-  if (!(gameStatus())) {
-    return
-  }
-  if (document.getElementsByClassName('playButton')[0].textContent != "Start") {
-    imageHolder.style.display = "block";
-    playerHolder.style.display = "none";
-    e.preventDefault();
-    getSong();
-    skipped = 0;
-    videoId = YouTubeGetID("https://www.youtube.com/watch?v="+VIDEO_ID);
-    updatePlayer();
-    setTimeout(() => { playVideo(); }, 1000);
-  }
-});
-
 timeButton.addEventListener("click", (e) => {
-  // Game unplayable after 5 skips
-  if (!(gameCheck())) {
-    return
-  }
-  // Check if game has started
-  if (!(gameStatus())) {
-    return
-  }
+  if (!(HALTSTATE) && STARTED) {
 
-  skipped += 1;
-  console.log(END_TIME);
-  e.preventDefault();
-  let timeStr = `${Math.floor(((START_TIME_SECONDS+skipped)+((skipped+1))) / 60).toString().padStart(2, "0")}:${(((START_TIME_SECONDS+skipped)+((skipped+1))) % 60).toString().padStart(2, "0")}`;
-  END_TIME = timeStr;
-  console.log(END_TIME, skipped, ((START_TIME_SECONDS+1)+((skipped+1))));
-  updatePlayer();
+
+    if (moretime == 6) {
+      (messageText.style.visibility = "visible", clearTimeout(window.timeoutId), window.timeoutId = setTimeout(() => messageText.style.visibility = "hidden", 3000))
+      messageText.textContent = `You can't add more time.`;
+      return
+    }
+    
+    moretime +=1;
+    addTime();
+    (messageText.style.visibility = "visible", clearTimeout(window.timeoutId), window.timeoutId = setTimeout(() => messageText.style.visibility = "hidden", 3000))
+    messageText.textContent = `Time added, remaining: ${6-moretime}`;
+    
+    //console.log(END_TIME);
+    e.preventDefault();
+    let timeStr = `${Math.floor(((START_TIME_SECONDS+moretime)+((moretime+1))) / 60).toString().padStart(2, "0")}:${(((START_TIME_SECONDS+moretime)+((moretime+1))) % 60).toString().padStart(2, "0")}`;
+    END_TIME = timeStr;
+    //console.log(END_TIME, moretime, ((START_TIME_SECONDS+1)+((moretime+1))));
+    updatePlayer();
+  } else {
+    // Check if game has started
+    if (!(gameStatus())) {
+      return
+    }
+  }
 });
 
 resetButton.addEventListener("click", (e) => {
   resetGame();
 });
+
+skipButton.addEventListener("click", (e) => {
+  if (!(HALTSTATE) && STARTED) {
+    if (nextButton.style.visibility != "visible") {
+      giveScore = 1;
+      moretime = 0;
+      addSkip();
+      nextButton.click();
+    }
+  }
+});
+
+alertCloseButton.addEventListener("click", (e) => {
+  pkboo([[modalPopup,"display","none"]]);
+});
+
+modalButton.addEventListener("click", (e) => {
+  modalReset();
+  giveScore = 1;
+  resetButton.click();
+});
+
 
 function youTubePlayerCurrentTimeChange(currentTime) {
 
@@ -295,12 +554,8 @@ function pauseVideo() {
   player.pauseVideo();
 }
 function playVideo() {
-  if (gameCheck() == "Game Over") {
-    return
-  }
   if (document.getElementsByClassName('playButton')[0].textContent == "Start") {
     getSong();
-    skipped = 0;
     videoId = YouTubeGetID("https://www.youtube.com/watch?v="+VIDEO_ID);
     youTubePlayerChangeVideoId(videoId, minutesToSeconds(START_TIME), minutesToSeconds(END_TIME));
 
@@ -311,7 +566,7 @@ function playVideo() {
 }
 
 function YouTubeGetID(url) {
-  var ID = "";
+  let ID = "";
   url = url
     .replace(/(>|<)/gi, "")
     .split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
@@ -325,7 +580,7 @@ function YouTubeGetID(url) {
 }
 
 function youTubePlayerChangeVideoId(videoId, starttime, endtime) {
-  player.cueVideoById({ suggestedQuality: "tiny", videoId: videoId, startSeconds: starttime, endSeconds: endtime });
+  player.cueVideoById({ suggestedQuality: "small", videoId: videoId, startSeconds: starttime, endSeconds: endtime });
   pauseVideo();
 }
 
@@ -354,7 +609,7 @@ function onPlayerReady() {
   console.log(true);
 }
 
-var done = false;
+let done = false;
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING && !done) {
     done = true;
@@ -372,15 +627,14 @@ function minutesToSeconds(mins) {
 }
 
 function filterList() {
-  var filter = input.value.toLowerCase();
+  let filter = input.value.toLowerCase();
   
   // Get the list and all list items
-  //var list = document.getElementById("myList");
-  var items = songColumn.getElementsByTagName("li");
+  let items = songColumn.getElementsByTagName("li");
   
   // Loop through all list items, and hide those that don't match the search query
-  for (var i = 0; i < items.length; i++) {
-    var item = items[i];
+  for (let i = 0; i < items.length; i++) {
+    let item = items[i];
     if (item.innerHTML.toLowerCase().indexOf(filter) > -1) {
       item.style.display = "";
     } else {
