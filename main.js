@@ -334,7 +334,7 @@ choiceSection.addEventListener("click", (e) => {
             setTimeout(() => { playVideo(); }, 1000);
             imageHolder.style.display = "none";
             playerHolder.style.display = "block";
-            SCORE += Number(giveScore.toFixed(2));
+            SCORE += parseFloat(giveScore.toFixed(2));
             nextButton.style.visibility = "visible";
             messageText.textContent = "Correct!";
             //console.log('Correct song.', SCORE, giveScore);
@@ -342,7 +342,7 @@ choiceSection.addEventListener("click", (e) => {
             giveScore = 1;
             moretime = 0;
           } else {
-            giveScore = Number((giveScore-0.1).toFixed(2));
+            giveScore = parseFloat((giveScore-0.1).toFixed(2));
             MAX_TRIES -= 1;
             messageText.textContent = `Incorrect! Tries remaining: ${MAX_TRIES}`;
             //console.log('Wrong song selected.', SCORE, giveScore);
