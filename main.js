@@ -1,5 +1,5 @@
 // Example list of strings
-/*VIDEO_ID: ["Album", "Song", "Date"] 65 in KV*/
+/*VIDEO_ID: ["Album", "Song", "Date"] 79 in KV*/
 playlist = {
   "iLXyoC2HRgY": ["Love Shake", "Love Shake", "September 22, 2014"],
   "XwCDkRiJucw": ["Love Shake", "Shut Up", "September 22, 2014"],
@@ -24,6 +24,16 @@ playlist = {
   "54j-ePPQStU": ["The End of Nightmare", "Diamond", "Febuary 13, 2019"],
   "xjKn61YOHIk": ["The End of Nightmare", "And there was no one left", "Febuary 13, 2019"],
   "X1Mte4dHW1s": ["The End of Nightmare", "Daydream", "Febuary 13, 2019"],
+  "-GwP6BnZt1Y": ["The Beginning of the End", "What - Japanese. Ver.", "September 11, 2019"],
+  "LPBIO2B6BEI": ["The Beginning of the End", "Chase Me - Japanese. Ver.", "September 11, 2019"],
+  "UFxWneoQ_mc": ["The Beginning of the End", "I Miss You", "September 11, 2019"],
+  "ZOsu__wtD30": ["The Beginning of the End", "PIRI - Japanese Ver.", "September 11, 2019"],
+  "EDbvV8tLu5E": ["The Beginning of the End", "Good Night - Japanese Ver.", "September 11, 2019"],
+  "s6xu5S-MAOQ": ["The Beginning of the End", "Wonderland - Japanese Ver.", "September 11, 2019"],
+  "SHmOpFbFgrM": ["The Beginning of the End", "Breakout", "September 11, 2019"],
+  "hm1dYdDKS9M": ["The Beginning of the End", "My Way", "September 11, 2019"],
+  "oxLfVoBOhaY": ["The Beginning of the End", "Mata Hitori ni Natta", "September 11, 2019"],
+  "6B4sh12t48w": ["The Beginning of the End", "You and I - Japanese Ver.", "September 11, 2019"],
   "W761DtH1oRg": ["Raid of Dream", "Deja Vu", "September 18, 2019"],
   "5ycjCmDYD2I": ["Raid of Dream", "The curse of the Spider", "September 18, 2019"],
   "ovw4Cy-zMiI": ["Raid of Dream", "Silent Night", "September 18, 2019"],
@@ -36,6 +46,9 @@ playlist = {
   "BgLhbkKu1s4": ["Dystopia: The Tree of Language", "SAHARA", "February 18, 2020"],
   "okGlx-t9hXA": ["Dystopia: The Tree of Language", "In The Frozen", "February 18, 2020"],
   "Um2tn8zM8bM": ["Dystopia: The Tree of Language", "Daybreak", "February 18, 2020"],
+  "aH6VcimxcuI": ["Japanese Single - Endless Night", "Endless Night", "March 11, 2020"],
+  "Om4xNQhHI6k": ["Japanese Single - Endless Night", "Over the Sky - Japanese Ver.", "March 11, 2020"],
+  "aH6VcimxcuI": ["Japanese Single - Endless Night", "Silent Night - Japanese Ver.", "March 11, 2020"],
   "MZ4JGye4dQU": ["Dystopia : Lose Myself", "BOCA", "August 17, 2020"],
   "TqcPjwKU_zc": ["Dystopia : Lose Myself", "Break The Wall", "August 17, 2020"],
   "F_2W8SW8iXA": ["Dystopia : Lose Myself", "Can’t get you out of my mind", "August 17, 2020"],
@@ -45,6 +58,9 @@ playlist = {
   "wKXjvh-wYKY": ["Dystopia : Road to Utopia", "Poison Love", "January 26, 2021"],
   "SGemMpImsXg": ["Dystopia : Road to Utopia", "4 Memory", "January 26, 2021"],
   "Ag2AWsFY5Ns": ["Dystopia : Road to Utopia", "New Days", "January 26, 2021"],
+  "b9UxVkTfkVg": ["Japanese Single - Eclipse", "Eclipse", "March 24, 2021"],
+  "HanFwe41w9s": ["Japanese Single - Eclipse", "No More", "March 24, 2021"],
+  "HVg7ELM1iZ4": ["Japanese Single - Eclipse", "Don't Light My Fire", "March 24, 2021"],
   "PEKkdIT8JPM": ["Summer Holiday", "BEcause", "July 30, 2021"],
   "sNgM3uBLkEU": ["Summer Holiday", "Airplane", "July 30, 2021"],
   "cTrWrRmHICw": ["Summer Holiday", "Whistle", "July 30, 2021"],
@@ -208,7 +224,7 @@ function resetGame() {
     albumClicks = 0;
     RELEASECORRECT = 0;
     releaseClicks = 0;
-    headTitle.textContent = `${65-Object.keys(playlist).length}/${Object.keys(playlist).length}`;
+    headTitle.textContent = `${79-Object.keys(playlist).length}/${Object.keys(playlist).length}`;
     scoreCard.textContent = SCORE
     pkboo([[nextButton,"visibility","visible"]]);
     nextButton.click();
@@ -224,7 +240,7 @@ function gameStop() {
 }
 
 function starterPack() {
-  loadData(songColumn, 1);    // 65
+  loadData(songColumn, 1);    // 79
   loadData(albumColumn, 0);   // 17
   loadData(releaseColumn, 2); // 17
 
@@ -460,7 +476,7 @@ nextButton.addEventListener("click", (e) => {
   songHALT = false;
   albumHALT = false;
   releaseHALT = false;
-  headTitle.textContent = `${65-Object.keys(playlist).length}/${Object.keys(playlist).length}`;
+  headTitle.textContent = `${79-Object.keys(playlist).length}/${Object.keys(playlist).length}`;
   if (availableSongs()) {
     // Check if game has started
     if (!(gameStatus())) {
