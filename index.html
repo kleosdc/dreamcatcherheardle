@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Dreamcatcher Game
+K-Pop Guess Game
+DC Heardle
+Dreamcatcher Tunes
+Guess DC Song
+Dreamcatcher Hits
+Dreamcatcher Heardle">
+    <meta name="description" content="Immerse yourself in the captivating world of Dreamcatcher with our exclusive Heardle Game! Challenge your K-Pop knowledge by guessing the song in just seconds. Dive into a playlist featuring all the mesmerizing tunes from Dreamcatcher and test your fandom. Play now and let the music magic begin! 🎶">
+    <title>DREAMCATCHER Heardle Game</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="DreamcatcherHeardle.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta property="og:title" content="DREAMCATCHER Heardle Game">
+    <meta property="og:description" content="Immerse yourself in the captivating world of Dreamcatcher with our exclusive Heardle Game! Challenge your K-Pop knowledge by guessing the song in just seconds. Dive into a playlist featuring all the mesmerizing tunes from Dreamcatcher and test your fandom. Play now and let the music magic begin!">
+    <meta property="og:image" content="https://dreamcatcherheardle.com/images/dclogo.png">
+    <meta property="og:url" content="https://dreamcatcherheardle.com/">
+    
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body id="mainBody" data-home-page="DreamcatcherHeardle.html" data-home-page-title="DreamcatcherHeardle" data-path-to-root="./" data-include-products="false" class="u-body u-overlap u-overlap-contrast u-overlap-transparent u-xl-mode" data-lang="en"><header class="u-clearfix u-header u-header" id="sec-120b"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-text u-text-default u-text-1">HEARDLE</p>
+        <p class="u-text u-text-default u-text-2">Dreamcatcher</p><span class="u-file-icon u-icon u-opacity u-opacity-50 u-icon-1"><img src="images/10765833.png" alt=""></span><span class="u-file-icon u-icon u-icon-rectangle u-opacity u-opacity-50 u-icon-2"><img src="images/860821.png" alt=""></span>
+      </div></header>
+    <section class="u-clearfix u-shading u-uploaded-video u-video u-video-cover u-section-1" id="sec-ec7b">
+      <div class="u-background-video u-expanded" style="">
+        <div class="embed-responsive">
+          <video id="videoElement" class="embed-responsive-item" data-autoplay="1" loop="" muted="1" autoplay="autoplay" playsinline="">
+            <source id="videoSource" src="files/handong.mp4" type="video/mp4">
+            <p>Your browser does not support HTML5 video.</p>
+          </video>
+        </div>
+        <div id="overlay" class="u-video-shading" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25));"></div>
+      </div>
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-container-style u-group u-shape-rectangle u-group-1">
+          <div class="u-container-layout u-container-layout-1">
+            <div id="player" style="visibility: hidden;"></div>
+          </div>
+        </div>
+        <div class="u-container-style u-group u-shape-rectangle u-group-2">
+          <a id="popup" href="#sec-3b12" style="display: none;"></a>
+          <a id="alerts" href="#sec-a7ac" style="display: none;"></a>
+          <div id="buttonGroup" class="u-container-layout u-container-layout-2">
+            <a id="timeButton" class="u-border-none u-btn u-button-style u-dialog-link u-hover-feature u-hover-palette-5-dark-1 u-palette-5-light-1 u-btn-1">TIME</a>
+            <a id="playButton" class="u-border-none u-btn u-button-style u-dialog-link u-hover-feature u-hover-palette-5-dark-1 u-palette-5-light-1 u-btn-2">PLAY</a>
+            <a id="skipButton" class="u-border-none u-btn u-button-style u-hover-feature u-hover-palette-5-dark-1 u-palette-5-light-1 u-btn-3">SKIP</a>
+          </div>
+        </div>
+        <div class="u-container-style u-group u-shape-rectangle u-group-3">
+          <div class="u-container-layout u-container-layout-3">
+            <div class="u-container-style u-expanded-width u-group u-shape-rectangle u-group-4">
+              <div class="u-container-layout u-container-layout-4" style="justify-items: center;display: grid;">
+                <input type="text" id="inputField" class="input" onkeyup="FILTERLIST()" placeholder="Search for song...">
+                <div id="clearIcon" class="clear-icon" onclick="clearInput()" style="color:black">X</div>
+              </div>
+            </div>
+            <div class="u-container-style u-group u-shape-rectangle u-group-5">
+              <div class="u-container-layout u-container-layout-5">
+                <ul id="contentList" class="dropdown-content">
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+    </section>
+    
+  <section class="u-align-center u-black u-clearfix u-container-style u-dialog-block u-opacity u-opacity-70 u-dialog-section-5" id="sec-3b12">
+      <div class="u-black u-container-style u-dialog u-shape-rectangle u-dialog-1" style="top: -100px;">
+        <div class="u-container-layout u-container-layout-1">
+          <h2 id="modalHead" class="u-align-center u-text u-text-default u-text-1">Welcome!</h2>
+          <p id="modalText" class="u-align-center u-text u-text-default u-text-2">Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
+          <a id="modalButton" href="" class="u-align-center u-border-none u-btn u-btn-round u-button-style u-hover-palette-5-dark-2 u-palette-5-dark-1 u-radius-50 u-text-body-alt-color u-text-hover-white u-btn-1">Get Started</a>
+        </div><button class="u-dialog-close-button u-icon u-text-grey-50 u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 413.348 413.348" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-5801"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 413.348 413.348" id="svg-5801"><path d="m413.348 24.354-24.354-24.354-182.32 182.32-182.32-182.32-24.354 24.354 182.32 182.32-182.32 182.32 24.354 24.354 182.32-182.32 182.32 182.32 24.354-24.354-182.32-182.32z"></path></svg></button>
+      </div>
+    </section><style>.u-dialog-section-5 .u-dialog-1 {
+  width: 570px;
+  min-height: 500px;
+  height: auto;
+  box-shadow: 5px 5px 20px 0 rgba(0,0,0,0.4);
+  margin: 285px auto 60px;
+}
+
+.u-dialog-section-5 .u-container-layout-1 {
+  padding: 40px 30px;
+}
+
+.u-dialog-section-5 .u-text-1 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 700;
+  margin: 0 auto;
+}
+
+.u-dialog-section-5 .u-text-2 {
+  margin: 40px 0 0;
+}
+
+.u-dialog-section-5 .u-btn-1 {
+  border-style: none;
+  font-size: 1rem;
+  background-image: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin: 214px auto 0;
+  padding: 9px 47px 10px 46px;
+}
+
+.u-dialog-section-5 .u-icon-1 {
+  width: 15px;
+  height: 15px;
+  left: auto;
+  top: 17px;
+  position: absolute;
+  right: 16px;
+}
+
+@media (max-width: 1199px) {
+  .u-dialog-section-5 .u-text-2 {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 991px) {
+  .u-dialog-section-5 .u-container-layout-1 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .u-dialog-section-5 .u-dialog-1 {
+    width: 540px;
+  }
+}
+
+@media (max-width: 575px) {
+  .u-dialog-section-5 .u-dialog-1 {
+    width: 340px;
+  }
+
+  .u-dialog-section-5 .u-container-layout-1 {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .u-dialog-section-5 .u-text-1 {
+    font-size: 2.25rem;
+  }
+}</style><section class="u-align-center u-black u-clearfix u-container-style u-dialog-block u-opacity u-opacity-0 u-dialog-section-6" id="sec-a7ac" data-dialog-show-on="click">
+      <div class="betterPos custom-expanded u-align-center u-black u-container-style u-dialog u-gradient u-opacity u-opacity-50 u-shape-rectangle u-dialog-1" style="top: 100px;">
+        <div class="u-container-layout u-container-layout-1">
+          <h2 id="alertText" class="u-align-center u-text u-text-default u-text-1">Correct&nbsp; &nbsp;</h2>
+        </div><button class="u-dialog-close-button u-icon u-text-white u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 348.333 348.334" style=""><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-9711"></use></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xml:space="preserve" class="u-svg-content" viewBox="0 0 348.333 348.334" x="0px" y="0px" id="svg-9711" style="enable-background:new 0 0 348.333 348.334;"><g><path d="M336.559,68.611L231.016,174.165l105.543,105.549c15.699,15.705,15.699,41.145,0,56.85   c-7.844,7.844-18.128,11.769-28.407,11.769c-10.296,0-20.581-3.919-28.419-11.769L174.167,231.003L68.609,336.563   c-7.843,7.844-18.128,11.769-28.416,11.769c-10.285,0-20.563-3.919-28.413-11.769c-15.699-15.698-15.699-41.139,0-56.85   l105.54-105.549L11.774,68.611c-15.699-15.699-15.699-41.145,0-56.844c15.696-15.687,41.127-15.687,56.829,0l105.563,105.554   L279.721,11.767c15.705-15.687,41.139-15.687,56.832,0C352.258,27.466,352.258,52.912,336.559,68.611z"></path>
+</g></svg></button>
+      </div>
+    </section><style>.u-dialog-section-6 .u-dialog-1 {
+  min-height: 55px;
+  height: auto;
+  width: 456px;
+  background-image: linear-gradient(to right, black, #db545a);
+  margin: 442px auto 60px;
+}
+
+.u-dialog-section-6 .u-container-layout-1 {
+  padding: 0 30px 3px;
+}
+
+.u-dialog-section-6 .u-text-1 {
+  font-size: 2.5rem;
+  text-transform: none;
+  font-weight: 400;
+  margin: 0 auto;
+}
+
+.u-dialog-section-6 .u-icon-1 {
+  width: 16px;
+  height: 16px;
+  left: auto;
+  top: 12px;
+  position: absolute;
+  right: 16px;
+}
+
+@media (max-width: 767px) {
+  .u-dialog-section-6 .u-container-layout-1 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+@media (max-width: 575px) {
+  .u-dialog-section-6 .u-dialog-1 {
+    width: 340px;
+  }
+
+  .u-dialog-section-6 .u-text-1 {
+    font-size: 1.875rem;
+  }
+}</style>
+
+<style>
+.input {
+    padding: 10px;
+    width: 300px;
+    margin: 10px;
+}
+
+#inputField {
+    padding: 10px 30px 10px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: black;
+}
+
+.clear-icon {
+    position: absolute !important;
+    height: 39px;
+    width: 30px;
+    top: 50%;
+    right: 30%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: none;
+    align-items: center;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    list-style: none;
+    padding: 0 25px 0 0;
+    margin: 0;
+    max-height: 200px; /* Set a maximum height for the dropdown content */
+    overflow-y: auto; /* Add a vertical scrollbar when content exceeds max-height */
+    background: red;
+}
+
+.dropdown-content li {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Change color on hover */
+.dropdown-content li:hover {
+    background: linear-gradient(to right, transparent 0%, transparent 15%, #ffd700 50%, #ffd700 50%, transparent 85%);
+}
+
+.dropdown-content li:last-child {
+    border-bottom: none;
+}
+</style>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="main.js"></script>
+</body></html>
